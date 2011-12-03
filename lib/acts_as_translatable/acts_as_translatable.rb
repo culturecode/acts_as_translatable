@@ -69,8 +69,17 @@ module ActsAsTranslatable
         
         # SETTERS
         define_method("#{attribute}_translated=") do |value|
-          translation = attribute_translation(attribute) || self.translations.build(:attribute_name => attribute)
-          translation.text = value
+          translation = attribute_translation(attribute)
+          if value.blank?
+            puts "blank"
+            translation.destroy if translation
+          elsif translation
+            puts "update"
+            translation.text = value
+          else
+            puts "new"
+            self.translations.build(:attribute_name => attribute, :text => value)
+          end
         end        
       end
 
