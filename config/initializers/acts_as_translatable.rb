@@ -9,7 +9,7 @@ class SimpleForm::FormBuilder
       input_type = default_input_type(attribute_name, find_attribute_column(attribute_name), {})
       output = input(attribute_name, options)
       options[:wrapper_html].merge!(:class => "translation_field")
-      options[:as] = input_type
+      options[:as] ||= input_type
       output << input("#{attribute_name}_translated", options)
     end
 
