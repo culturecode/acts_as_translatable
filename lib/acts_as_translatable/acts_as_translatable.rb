@@ -64,7 +64,7 @@ module ActsAsTranslatable
         # Return the translation or the default value for that column
         define_method("#{attribute}_translated") do
           translation = attribute_translation(attribute)
-          translation ? translation.text : self.class.columns.find {|column| column.name == attribute }.default
+          translation ? translation.text : self.class.columns.find {|column| column.name == attribute }.try(:default) # We 'try', because this may be an ActiveRecord::Base.store column, with no default
         end
         
         # SETTERS
