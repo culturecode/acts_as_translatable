@@ -53,7 +53,7 @@ module ActsAsTranslatable
         # GETTERS
         # Return the translated value or the untranslated value if no translation is available
         define_method("localized_#{attribute}") do
-          if self.locale == I18n.locale.to_s
+          if self.locale.blank? || self.locale == I18n.locale.to_s
             send(attribute)
           else
             translation = attribute_translation(attribute)
